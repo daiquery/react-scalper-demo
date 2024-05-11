@@ -5,22 +5,33 @@ async function scrapeMostImportantInfo(searchResults, term) {
     try {
         const mostImportantData = [];
         for (const result of searchResults) {
+
             console.log("reached here: ", result)
-            const response = await axios.get(result.url);
+            const response = await axios.get(result.url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'} });
+            // console.log("hi hi cheerio: ", response)
             const $ = cheerio.load(response.data);
-            const relevantData = $('body').text(); 
-            if (relevantData.includes(term)) {
+            const relevantData = $('body').text().trim().replace(/\n/g,'');
+
+            if (relevantData.includes(term)) { // donte burney
                 mostImportantData.push({
                     title: result.title,
                     url: result.url,
                     data: relevantData
                 });
             }
+
+            console.log("most important: ", mostImportantData)
         }
         return mostImportantData;
     } catch (error) {
+        console.log("hey what gives?????", error)
         throw new Error(`Error scraping data: ${error.message}`);
     }
 }
 
 module.exports = { scrapeMostImportantInfo };
+
+
+// wherever name mentionec extrct parent node and highest parent
+// go to node and go to outer parent
+// 
