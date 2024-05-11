@@ -8,11 +8,10 @@ async function scrapeMostImportantInfo(searchResults, term) {
 
             console.log("reached here: ", result)
             const response = await axios.get(result.url, { headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36'} });
-            // console.log("hi hi cheerio: ", response)
             const $ = cheerio.load(response.data);
             const relevantData = $('body').text().trim().replace(/\n/g,'');
 
-            if (relevantData.includes(term)) { // donte burney
+            if (relevantData.includes(term)) {
                 mostImportantData.push({
                     title: result.title,
                     url: result.url,
@@ -24,7 +23,6 @@ async function scrapeMostImportantInfo(searchResults, term) {
         }
         return mostImportantData;
     } catch (error) {
-        console.log("hey what gives?????", error)
         throw new Error(`Error scraping data: ${error.message}`);
     }
 }
@@ -32,6 +30,5 @@ async function scrapeMostImportantInfo(searchResults, term) {
 module.exports = { scrapeMostImportantInfo };
 
 
-// wherever name mentionec extrct parent node and highest parent
+// wherever name mentioned extract parent node and highest parent
 // go to node and go to outer parent
-// 

@@ -14,7 +14,7 @@ async function googleSearch(term) {
             return [];
         }
     } catch (error) {
-        throw new Error(`Error searching Google: ${error.message}`);
+        throw new Error(`Error searching: ${error.message}`);
     }
 }
 
